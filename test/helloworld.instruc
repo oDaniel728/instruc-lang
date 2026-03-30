@@ -1,0 +1,19 @@
+new def @load
+    req comments
+    # req sayeachline
+    req std
+    req str 
+end def
+
+new def @main
+    new stack $
+    use stack $
+
+        str loadstr "Hello, World!"
+        call std@printf
+
+    end stack *
+end def
+
+new def @quit
+end def

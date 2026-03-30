@@ -1,0 +1,49 @@
+new def @load   # antes do main
+    # req sayeachline
+    req comments
+    
+    # comentários
+    req std     # std
+    req math    # opsum, opsub, etc.
+    req stacks  # stack ...
+end def
+
+new def @quit   # após o main
+end def
+
+new def @main   # new - novo; def - define/label, uma função, o @ define que é especial
+    # new - novo; stack - pilha; cria uma nova pilha
+    new stack $     # stack principal
+    new stack 0     # stack 0
+    new stack 1     # stack 1
+    new stack 2     # stack 2
+                    # stack - lista manipulável
+
+    # use - usar; stack - pilha; usa uma pilha
+    use stack 0     # usa a pilha 0
+        load 1      # carrega o número 1(append)
+        load 2      # carrega o número 2
+        load 3      # carrega o número 3
+
+    use stack 1 # [11, 12, 13]
+        load 11
+        load 12
+        load 13
+
+    use stack $ # stack principal
+        # biblioteca de stack
+        stack merge 0 1 > $                 # junta as stacks 0 e 1, e coloca em $
+                                            # $ = [*0, *1]
+
+        stack run call math@opsum as 1 > 2  # muda de stack temporariamente,
+                                            # roda `call math@opsum` com os dados da stack 1
+                                            # envia o resultado para stack 2
+                                            # > soma todos os valores da stack 1 e envia pra 2
+
+        stack run call std@print as 2       # muda de stack temporariamente,
+                                            # roda `call std@print` com os dados da stack 2
+                                            # > printa os itens da lista 2
+        # call std@snap
+
+    end stack *
+end def
