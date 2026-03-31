@@ -102,12 +102,14 @@ Objetivo: carregar libs sem dependencia de importacao padrao e sem poluir `sys.m
 
 ## src/types.py
 
-Define protocolos para contrato entre runtime e libs:
+O detalhamento completo dos protocolos foi movido para:
 
-- `CodeLineProtocol`
-- `RunnerAPIProtocol`
+- `docs/types-protocols.md`
 
-Esses protocolos permitem que bibliotecas sejam escritas com tipagem clara, sem acoplamento direto forte na implementacao concreta.
+Resumo rapido:
+
+- `CodeLineProtocol`: contrato de uma linha de codigo executavel
+- `RunnerAPIProtocol`: contrato da API que as bibliotecas usam
 
 ## Bibliotecas em src/libs
 
@@ -184,4 +186,5 @@ Util para debug de fluxo.
 2. `src/runner.py`
 3. `src/codeline.py`
 4. `src/libs/*.py`
-5. `src/importer.py` e `src/types.py`
+5. `src/importer.py`
+6. `docs/types-protocols.md`

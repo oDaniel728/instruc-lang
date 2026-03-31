@@ -77,6 +77,8 @@ end def
 - [docs/language-reference.md](docs/language-reference.md)
 - [docs/architecture.md](docs/architecture.md)
 - [docs/python-code-reference.md](docs/python-code-reference.md)
+- [docs/library-development.md](docs/library-development.md)
+- [docs/types-protocols.md](docs/types-protocols.md)
 - [docs/tests-reference.md](docs/tests-reference.md)
 
 ## Aviso

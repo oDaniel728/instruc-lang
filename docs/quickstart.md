@@ -85,3 +85,7 @@ A pasta [test](../test) contem cenarios reais para referencia:
 Para descricao completa dos cenarios e saidas esperadas, veja:
 
 - [docs/tests-reference.md](tests-reference.md)
+
+Para criar novas bibliotecas e comandos customizados, veja:
+
+- [docs/library-development.md](library-development.md)
