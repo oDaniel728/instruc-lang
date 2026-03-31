@@ -1,7 +1,5 @@
 new def @load
-    req std
-    req str
-    req label
+    req basic
 end def
 
 new def label

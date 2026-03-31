@@ -8,4 +8,6 @@ def _on_load(ctx: "RunnerAPIProtocol"):
     ctx.inject_code([
         "req comments",
         "req std",
+        "req str",
+        "req label"
     ], "@load")
