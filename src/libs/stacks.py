@@ -81,7 +81,7 @@ def __run_kw_verif(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
     if not line.startswith(__PREFIX): return;
     stack_name = ctx.enum.SyntaxRulePatterns.STACK_NAME;
     if m:=re.match(
-        fr"^{__PREXP}{__run_kw}\s+(.+)\s+as\s+({stack_name})\s*(?:\>\s*({stack_name}))?\s+$", line
+        fr"^{__PREXP}{__run_kw}\s+(.+)\s+as\s+({stack_name})\s*(?:\>\s*({stack_name}))?\s*$", line
     ):
         code_line, s1, s2 = m.group(1), m.group(2), m.group(3);
         cl = ctx.CodeLine(code_line);
