@@ -9,7 +9,7 @@ new def @main
     new stack $
     use stack $
 
-        str loadstr "Hello, World!"
+        str concat "Hello," " World!" > $
         call std@printf
 
     end stack *
