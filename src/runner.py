@@ -8,6 +8,10 @@ from . import enum
 from .importer import carregar_simbolos
 from .types import RunnerAPIProtocol
 
+class RunnerLineContext():
+    def __init__(self, i: int, line: CodeLine):
+        self.index = i;
+        self.codeline = line;
 
 class Runner():
     """Runtime executor for Instruc programs."""
@@ -22,10 +26,20 @@ class Runner():
         self.libs = dict[str, dict[str, Any]]();
 
         self._current_label = "";
-        self._current_stack = "";
+        self._current_stack = "$";
+        self.register_stack(self._current_stack);
+
+        self._current_line = RunnerLineContext(0, CodeLine(""));
+    
+    def get_current_line(self) -> RunnerLineContext:
+        return self._current_line;
+    def set_current_line(self, line: RunnerLineContext):
+        self._current_line = line;
 
     def __require__(self, name: str) -> dict[str, Any]:
         f = Path(f"src/libs/{name}.py");
+        if not f.exists():
+            raise Exception(f"Library '{name}' not found");
         symbols = carregar_simbolos(f);
         if "_on_load" in symbols:
             symbols["_on_load"](self);
@@ -126,7 +140,7 @@ class Runner():
             lines_.append(line);
         self.get_label(label).extend(lines_);
 
-    def each_line(self, line: str):
+    def each_line(self, i: int, line: str):
         line = line.strip();
         if (line == ''): return;
         c = CodeLine(line)
@@ -151,19 +165,22 @@ class Runner():
     def read(self):
         """Parse the source file and distribute lines by label."""
         with self.fp.open() as f:
-            for line in f:
-                self.each_line(line)
+            for i, line in enumerate(f):
+                self.each_line(i, line)
 
     def execute(self, label: str):
         """Execute all lines registered for a label."""
-        for line in self.labels[label]:
-            line.execute(self)
+        if not label in self.labels:
+            raise Exception(f"Label '{label}' not found");
+        for i, line in enumerate(self.labels[label]):
+            self.overwrite_memory("instruc:_line", i);
+            line.execute(self) # type: ignore
 
     def adjust_code(self):
         """Apply all syntax adjusters to all parsed lines."""
         for label in self.labels.values():
             for line in label:
-                line.adjust(self);
+                line.adjust(self); # type: ignore
 
     def snapshot(self):
         print("Stacks:")
@@ -183,8 +200,12 @@ class Runner():
         """Run the full lifecycle: @load, @main, @quit."""
         self.read();
         self.adjust_code();
-        self.execute("@load");
+        if "@load" in self.labels:
+            self.execute("@load");
+        if "@main" not in self.labels:
+            raise Exception("No @main label found");
         self.execute("@main");
-        self.execute("@quit");
+        if "@quit" in self.labels:
+            self.execute("@quit");
         if debug:
             self.snapshot();

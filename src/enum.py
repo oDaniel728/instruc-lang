@@ -16,6 +16,7 @@ class SyntaxKeywords():
 class SyntaxRulePatterns():
     LABEL_NAME = r"[a-zA-Z_\@][a-zA-Z0-9_]*";
     STACK_NAME = r"[a-zA-Z0-9_\$]+";
+    METHOD_NAME = r"\w+\@\w+";
 
 class SyntaxRegularExpressionPatterns():
     DEFINE_LABEL = fr"{SyntaxKeywords.NEW}\s+{SyntaxKeywords.LABEL}\s+({SyntaxRulePatterns.LABEL_NAME})";
@@ -30,7 +31,7 @@ class SyntaxRegularExpressionPatterns():
 
     LOAD = fr"{SyntaxKeywords.LOAD}\s+(\d+)";
     KILL = fr"{SyntaxKeywords.KILL}\s+(\d+)";
-    CALL  = fr"{SyntaxKeywords.CALL}\s+(.+)";
+    CALL  = fr"{SyntaxKeywords.CALL}\s+({SyntaxRulePatterns.METHOD_NAME})";
 
     # libformat = lib@method
     LIBFORMAT = fr"(\w+){SyntaxKeywords.REQACESSOR}(\w+)";

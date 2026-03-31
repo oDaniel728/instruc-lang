@@ -10,6 +10,16 @@ class CodeLineProtocol(Protocol):
     def execute(self, runnerapi: "RunnerAPIProtocol"): ...;
     def __str__(self) -> str: ...;
     def __repr__(self) -> str: ...;
+class RunnerLineContextProtocol(Protocol):
+    @property
+    def index(self) -> int: ...;
+    @index.setter
+    def index(self, value: int): ...;
+
+    @property
+    def codeline(self) -> CodeLineProtocol: ...;
+    @codeline.setter
+    def codeline(self, value: CodeLineProtocol): ...;
 class RunnerAPIProtocol(Protocol):
     def get_stack(self, name: str) -> list[Any]: ...;
     def get_label(self, name: str) -> list[CodeLine]: ...;
@@ -55,3 +65,8 @@ class RunnerAPIProtocol(Protocol):
     CodeLine: "Type[CodeLine]" = None; # type: ignore
 
     def adjust_code(self) -> Unknown: ...;
+
+    def get_current_line(self) -> RunnerLineContextProtocol: ...;
+    def set_current_line(self, line: RunnerLineContextProtocol): ...;
+
+    def execute(self, label: str): ...;

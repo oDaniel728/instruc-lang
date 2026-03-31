@@ -1,0 +1,17 @@
+new def @load
+    req std
+    req str
+    req label
+end def
+
+new def label
+    str loadstr "Hello, World!"
+    call std@print
+end def
+
+new def @main
+    call label
+end def
+
+new def @quit
+end def
