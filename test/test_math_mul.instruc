@@ -1,0 +1,24 @@
+new def @load
+    req comments
+    req std
+    req math
+    req stacks
+end def
+
+new def @main
+    new stack $
+    new stack numbers
+
+    use stack numbers
+        load 2
+        load 3
+        load 4
+
+    use stack $
+        stack run call math@opmul as numbers > $
+        call std@printf
+    end stack *
+end def
+
+new def @quit
+end def

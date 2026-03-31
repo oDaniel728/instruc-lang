@@ -1,0 +1,18 @@
+new def @load
+    req comments
+    req std
+    req str
+end def
+
+new def @main
+    new stack $
+
+    use stack $
+        str loadstr "Linguagem"
+        str concat "Instruc " "Lang" > $
+        call std@print
+    end stack *
+end def
+
+new def @quit
+end def

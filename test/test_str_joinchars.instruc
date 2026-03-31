@@ -1,0 +1,24 @@
+new def @load
+    req comments
+    req std
+    req str
+end def
+
+new def @main
+    new stack $
+
+    use stack $
+        str load I
+        str load N
+        str load S
+        str load T
+        str load R
+        str load U
+        str load C
+        str joinchars
+        call std@printf
+    end stack *
+end def
+
+new def @quit
+end def

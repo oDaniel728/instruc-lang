@@ -1,0 +1,19 @@
+new def @load
+    req comments
+    req std
+end def
+
+new def @main
+    new stack $
+
+    use stack $
+        load 10
+        load 20
+        load 30
+        kill 20
+        call std@print
+    end stack *
+end def
+
+new def @quit
+end def
