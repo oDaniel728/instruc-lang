@@ -76,6 +76,8 @@ end def
 - [docs/quickstart.md](docs/quickstart.md)
 - [docs/language-reference.md](docs/language-reference.md)
 - [docs/architecture.md](docs/architecture.md)
+- [docs/python-code-reference.md](docs/python-code-reference.md)
+- [docs/tests-reference.md](docs/tests-reference.md)
 
 ## Aviso
 

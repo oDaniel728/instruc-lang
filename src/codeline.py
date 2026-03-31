@@ -6,11 +6,13 @@ from . import enum
 
 
 class CodeLine():
+    """Represents and executes a single Instruc line."""
     SYNTAXVERIFS = list[Callable[["CodeLine", "RunnerAPIProtocol"], Any]]();
     def __init__(self, line: str) -> None:
         self.line = line.strip();
     
     def execute(self, runnerapi: "RunnerAPIProtocol"):
+        """Run registered syntax verifications for this line."""
         if (self.line == ''): return;
         for v in self.SYNTAXVERIFS:
             r = v(self, runnerapi);
@@ -18,6 +20,7 @@ class CodeLine():
                 return;
 
     def adjust(self, runnerapi: "RunnerAPIProtocol"):
+        """Apply syntax adjusters that can rewrite line text."""
         for a in runnerapi.get_syntax_adjusters():
             ret = a(self, runnerapi);
             self.line = ret if ret != None else self.line;

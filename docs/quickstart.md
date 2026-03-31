@@ -81,3 +81,7 @@ A pasta [test](../test) contem cenarios reais para referencia:
 - [test/test1.instruc](../test/test1.instruc)
 - [test/test_stack_merge.instruc](../test/test_stack_merge.instruc)
 - [test/test_string_concat.instruc](../test/test_string_concat.instruc)
+
+Para descricao completa dos cenarios e saidas esperadas, veja:
+
+- [docs/tests-reference.md](tests-reference.md)

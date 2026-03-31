@@ -17,6 +17,7 @@ class _TypeCheckingStripper(ast.NodeTransformer):
 
 
 def _load_module_from_code(code: str, filename: str) -> types.ModuleType:
+    """Execute source code in an isolated module object."""
     module = types.ModuleType(filename)
     compiled = compile(code, filename, "exec")
     exec(compiled, module.__dict__)

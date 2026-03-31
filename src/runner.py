@@ -10,6 +10,7 @@ from .types import RunnerAPIProtocol
 
 
 class Runner():
+    """Runtime executor for Instruc programs."""
     enum = enum;
     CodeLine = CodeLine;
     SyntaxAdjusters = list[Callable[["CodeLine", "RunnerAPIProtocol"], Any]]();
@@ -148,15 +149,18 @@ class Runner():
             self.get_label(self._current_label).append(c);
 
     def read(self):
+        """Parse the source file and distribute lines by label."""
         with self.fp.open() as f:
             for line in f:
                 self.each_line(line)
 
     def execute(self, label: str):
+        """Execute all lines registered for a label."""
         for line in self.labels[label]:
             line.execute(self)
 
     def adjust_code(self):
+        """Apply all syntax adjusters to all parsed lines."""
         for label in self.labels.values():
             for line in label:
                 line.adjust(self);
@@ -176,6 +180,7 @@ class Runner():
             print(f"  {name}: {lib}");
 
     def run(self, debug: bool = False):
+        """Run the full lifecycle: @load, @main, @quit."""
         self.read();
         self.adjust_code();
         self.execute("@load");

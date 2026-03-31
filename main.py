@@ -2,6 +2,7 @@ from src.runner import Runner
 import sys
 
 def main():
+    """CLI entrypoint for running a .instruc program."""
     if len(sys.argv) < 2:
         print("Usage: python main.py <file>")
         return
