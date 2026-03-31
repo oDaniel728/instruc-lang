@@ -96,7 +96,7 @@ call std@print
 - `call std@print`: imprime todos os elementos da stack ativa
 - `call std@printf`: imprime apenas o primeiro elemento da stack ativa
 - `call std@snap`: imprime snapshot completo do runner
-- `print`: atalho de impressao registrado pela propria lib
+- `print`: atalho de impressão registrado pela propria lib
 
 ## Biblioteca math
 
@@ -171,10 +171,28 @@ str concat s1 s2 > s3
 
 ## Comentarios
 
-Com `req comments`, tudo apos `#` na linha e ignorado.
+Com `req comments`, tudo apos `#` na linha é ignorado.
 
 Exemplo:
 
 ```instruc
-load 10 # este trecho e comentario
+load 10 # este trecho é comentario
+```
+
+## Labels
+
+Com `req label`, você pode chamar labels como se fossem métodos, usando `call`.
+
+```instruc
+new def hello
+    load "Hello, World!"
+    call std@print
+end def 
+new def @main
+    call hello
+end def
+````
+saída:
+```
+Hello, World!
 ```
