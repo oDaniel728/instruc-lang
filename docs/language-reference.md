@@ -191,8 +191,11 @@ end def
 new def @main
     call hello
 end def
-````
-saída:
 ```
-Hello, World!
+
+## Biblioteca basic
+Adiciona std, comments, str e label.
+
+```instruc
+req basic
 ```
