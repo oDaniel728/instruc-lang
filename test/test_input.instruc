@@ -1,0 +1,26 @@
+new def @load
+    req std
+    req str
+    req read
+    req stacks
+end def
+
+new def @main
+    new stack 0
+    new stack $
+
+    use stack 0
+        str loadstr "Olá, "
+        read str "Digite seu nome: " > 0
+        str loadstr "!"
+        str joinchars
+
+    use stack $
+        stack run call std@print as 0
+
+    end stack *
+
+end def
+
+new def @quit
+end def

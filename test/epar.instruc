@@ -1,0 +1,11 @@
+new def @load
+    req epar
+end def
+
+new def @main
+    epar 1
+    epar 2
+end def
+
+new def @quit
+end def

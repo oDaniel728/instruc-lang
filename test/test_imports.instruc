@@ -1,0 +1,12 @@
+new def @load
+    req str
+    req ireq
+    ireq "./test/script.im.py"
+end def
+
+new def @main
+    yo    
+end def
+
+new def @quit
+end def
