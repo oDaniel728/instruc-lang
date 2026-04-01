@@ -2,7 +2,29 @@
 
 Todas as mudancas relevantes deste projeto serão documentadas neste arquivo.
 
+## [1.1.0] - 2026-03-31
+
+### Adicoes
+
+- Novas bibliotecas em `src/libs`: `builtins`, `epar`, `ireq` e `read`.
+- Novos snippets para desenvolvimento em `.vscode/instruc.code-snippets` e `.vscode/lib.code-snippets`.
+- Novos cenarios de teste: `test/epar.instruc`, `test/test_imports.instruc`, `test/test_input.instruc` e `test/script.im.py`.
+- Nova documentacao por biblioteca em `docs/libs/`, com um arquivo Markdown por lib.
+- Referencia detalhada de simbolos e protocolos de `src/types.py` em `docs/types-protocols.md`.
+
+### Alteracoes
+
+- Ajustes em `src/codeline.py`, `src/runner.py` e `src/types.py` para evolucao da API de verificacao de sintaxe e do contrato do runtime.
+- Atualizacoes na biblioteca `src/libs/str.py`.
+- Atualizacao dos documentos centrais (`README.md`, `docs/language-reference.md`, `docs/python-code-reference.md`, `docs/library-development.md` e `docs/architecture.md`) para refletir o novo formato da documentacao e a referencia de tipos.
+
+### Notas
+
+- Esta versao representa o estado atual apos a base `1.0.0`.
+
 ## [1.0.0] - 2026-03-31
+
+Base de referencia informada: commit `91cf15dbb38964799b3c999f933f02ff0b83420b`.
 
 ### Adicoes
 

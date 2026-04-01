@@ -20,6 +20,7 @@ Visao tecnica da implementacao atual.
 - [src/codeline.py](../src/codeline.py)
 - [src/enum.py](../src/enum.py)
 - [src/importer.py](../src/importer.py)
+- [src/types.py](../src/types.py)
 
 ## Modelo de dados
 
@@ -40,6 +41,11 @@ Bibliotecas em [src/libs](../src/libs) podem:
 - Injetar codigo automaticamente em labels
 
 Exemplo: `comments` registra um ajustador para remover comentarios apos `#`.
+
+Contrato de tipagem da extensibilidade:
+
+- [docs/types-protocols.md](types-protocols.md)
+- define aliases (`SyntaxVerification`, `SyntaxAdjuster`) e protocolos (`CodeLineProtocol`, `RunnerLineContextProtocol`, `RunnerAPIProtocol`)
 
 ## Ciclo de uma linha
 

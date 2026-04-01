@@ -91,111 +91,20 @@ Exemplo:
 call std@print
 ```
 
-## Biblioteca std
+## Bibliotecas
 
-- `call std@print`: imprime todos os elementos da stack ativa
-- `call std@printf`: imprime apenas o primeiro elemento da stack ativa
-- `call std@snap`: imprime snapshot completo do runner
-- `print`: atalho de impressão registrado pela propria lib
+A referencia detalhada de cada biblioteca agora esta separada por arquivo:
 
-## Biblioteca math
-
-Todas as operacoes usam a stack ativa, limpam a stack e inserem o resultado:
-
-- `call math@opsum`
-- `call math@opsub`
-- `call math@opmul`
-- `call math@opdiv`
-- `call math@oppow`
-- `call math@opmod`
-
-## Biblioteca stacks
-
-### Mesclar stacks
-
-```instruc
-stack merge s1 s2
-stack merge s1 s2 > s3
-```
-
-### Carregar stack dentro da stack atual
-
-```instruc
-stack load origem
-```
-
-### Rodar metodo em stack especifica
-
-```instruc
-stack call math@opsum as dados > resultado
-```
-
-### Rodar uma linha em stack especifica
-
-```instruc
-stack run call math@opsum as dados > resultado
-```
-
-## Biblioteca str
-
-### Carregar caractere
-
-```instruc
-str load A
-```
-
-### Carregar string literal
-
-```instruc
-str loadstr "Texto"
-```
-
-### Carregar caractere por codigo inteiro
-
-```instruc
-str loadint 65
-```
-
-### Juntar itens da stack em uma string
-
-```instruc
-str joinchars
-```
-
-### Concatenar strings (literais ou stacks)
-
-```instruc
-str concat "Hello" " World" > $
-str concat s1 s2 > s3
-```
-
-## Comentarios
-
-Com `req comments`, tudo apos `#` na linha é ignorado.
-
-Exemplo:
-
-```instruc
-load 10 # este trecho é comentario
-```
-
-## Labels
-
-Com `req label`, você pode chamar labels como se fossem métodos, usando `call`.
-
-```instruc
-new def hello
-    load "Hello, World!"
-    call std@print
-end def 
-new def @main
-    call hello
-end def
-```
-
-## Biblioteca basic
-Adiciona std, comments, str e label.
-
-```instruc
-req basic
-```
+- [docs/libs/README.md](libs/README.md)
+- [docs/libs/basic.md](libs/basic.md)
+- [docs/libs/builtins.md](libs/builtins.md)
+- [docs/libs/comments.md](libs/comments.md)
+- [docs/libs/epar.md](libs/epar.md)
+- [docs/libs/ireq.md](libs/ireq.md)
+- [docs/libs/label.md](libs/label.md)
+- [docs/libs/math.md](libs/math.md)
+- [docs/libs/read.md](libs/read.md)
+- [docs/libs/sayeachline.md](libs/sayeachline.md)
+- [docs/libs/stacks.md](libs/stacks.md)
+- [docs/libs/std.md](libs/std.md)
+- [docs/libs/str.md](libs/str.md)

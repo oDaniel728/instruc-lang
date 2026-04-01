@@ -63,22 +63,30 @@ end def
 
 ## Bibliotecas disponiveis
 
-- `std`: saida no terminal (`print`, `printf`, `snap`)
-- `math`: operacoes com numeros na stack atual (`opsum`, `opsub`, `opmul`, `opdiv`, `oppow`, `opmod`)
-- `stacks`: utilitarios para combinar e executar operacoes entre stacks
-- `str`: utilitarios para strings e caracteres
-- `comments`: suporte a comentarios com `#`
-- `basic`: injeta requisitos basicos
-- `sayeachline`: imprime cada linha processada
+As bibliotecas agora possuem documentacao individual em [docs/libs/README.md](docs/libs/README.md).
+
+- [basic](docs/libs/basic.md): atalho de setup (`req comments`, `req std`, `req str`, `req label`)
+- [builtins](docs/libs/builtins.md): comandos base da linguagem (`new/use/end stack`, `load`, `kill`, `req`, `call`)
+- [comments](docs/libs/comments.md): comentarios com `#`
+- [epar](docs/libs/epar.md): comando de exemplo `epar <num>`
+- [ireq](docs/libs/ireq.md): importacao de arquivo `.instruc` em runtime
+- [label](docs/libs/label.md): chamada direta de labels com `call <label>`
+- [math](docs/libs/math.md): operacoes numericas sobre a stack atual
+- [read](docs/libs/read.md): leitura de entrada (`read str|int|float|bool`)
+- [sayeachline](docs/libs/sayeachline.md): imprime cada linha executada (debug)
+- [stacks](docs/libs/stacks.md): DSL para merge/load/call/run entre stacks
+- [std](docs/libs/std.md): saida no terminal (`print`, `printf`, `snap`)
+- [str](docs/libs/str.md): utilitarios de string (`load`, `loadstr`, `loadint`, `joinchars`, `concat`)
 
 ## Documentacao detalhada
 
 - [docs/quickstart.md](docs/quickstart.md)
 - [docs/language-reference.md](docs/language-reference.md)
+- [docs/libs/README.md](docs/libs/README.md)
 - [docs/architecture.md](docs/architecture.md)
 - [docs/python-code-reference.md](docs/python-code-reference.md)
 - [docs/library-development.md](docs/library-development.md)
-- [docs/types-protocols.md](docs/types-protocols.md)
+- [docs/types-protocols.md](docs/types-protocols.md) (referencia detalhada de simbolos e contratos de `src/types.py`)
 - [docs/tests-reference.md](docs/tests-reference.md)
 
 ## Aviso

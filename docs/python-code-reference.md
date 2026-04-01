@@ -13,15 +13,21 @@ Arquivos principais:
 - `src/importer.py`: carregamento seguro de bibliotecas Python
 - `src/types.py`: protocolos de tipagem para extensao das libs
 
-Bibliotecas nativas:
+Bibliotecas nativas (documentacao por arquivo):
 
-- `src/libs/std.py`
-- `src/libs/math.py`
-- `src/libs/stacks.py`
-- `src/libs/str.py`
-- `src/libs/comments.py`
-- `src/libs/basic.py`
-- `src/libs/sayeachline.py`
+- [docs/libs/README.md](libs/README.md)
+- [docs/libs/basic.md](libs/basic.md)
+- [docs/libs/builtins.md](libs/builtins.md)
+- [docs/libs/comments.md](libs/comments.md)
+- [docs/libs/epar.md](libs/epar.md)
+- [docs/libs/ireq.md](libs/ireq.md)
+- [docs/libs/label.md](libs/label.md)
+- [docs/libs/math.md](libs/math.md)
+- [docs/libs/read.md](libs/read.md)
+- [docs/libs/sayeachline.md](libs/sayeachline.md)
+- [docs/libs/stacks.md](libs/stacks.md)
+- [docs/libs/std.md](libs/std.md)
+- [docs/libs/str.md](libs/str.md)
 
 ## main.py
 
@@ -106,79 +112,26 @@ O detalhamento completo dos protocolos foi movido para:
 
 - `docs/types-protocols.md`
 
-Resumo rapido:
+Resumo rapido dos simbolos de tipagem:
 
-- `CodeLineProtocol`: contrato de uma linha de codigo executavel
+- `Unknown`: alias para `Any`
+- `SyntaxVerification`: callable de verificador de sintaxe
+- `SyntaxAdjuster`: callable de ajustador de sintaxe
+- `CodeLineProtocol`: contrato de linha executavel
+- `RunnerLineContextProtocol`: contrato da linha corrente no executor
 - `RunnerAPIProtocol`: contrato da API que as bibliotecas usam
+
+Detalhes importantes descritos no guia de tipos:
+
+- agrupamento completo dos metodos por responsabilidade
+- assinatura generica de `get_memory[T](...)`
+- atributos especiais `enum` e `CodeLine` no contexto
+- observacao de divergencia atual: `overwrite_syntax_verification` esta no protocolo, mas nao esta implementado em `Runner`
 
 ## Bibliotecas em src/libs
 
-### std.py
-
-Funcoes:
-
-- `print(ctx)`: imprime toda stack atual
-- `printf(ctx)`: imprime apenas o primeiro item
-- `snap(ctx)`: imprime snapshot completo
-
-No `_on_load`, registra atalho de linguagem:
-
-- linha `print` (sem `call`) chama `std.print`.
-
-### math.py
-
-Operacoes sobre numeros da stack atual:
-
-- `opsum`, `opsub`, `opmul`, `opdiv`, `oppow`, `opmod`
-
-Padrao de execucao:
-
-- processa itens numericos
-- limpa stack atual
-- adiciona resultado unico
-
-### stacks.py
-
-DSL auxiliar com prefixo `stack`:
-
-- `stack merge s1 s2`
-- `stack merge s1 s2 > s3`
-- `stack load s1`
-- `stack call metodo as s1 > s2`
-- `stack run <linha> as s1 > s2`
-
-No `_on_load`:
-
-- registra palavras-chave em `memory`
-- registra verificadores de sintaxe da DSL de stacks
-
-### str.py
-
-DSL auxiliar com prefixo `str`:
-
-- `str load X`
-- `str loadstr "texto"`
-- `str loadint 65`
-- `str joinchars`
-- `str concat a b > destino`
-
-Aceita concatenacao por literal e por stack (quando os argumentos sao nomes de stack).
-
-### comments.py
-
-Registra syntax adjuster que remove tudo apos `#` na linha.
-
-### basic.py
-
-No carregamento, injeta automaticamente em `@load`:
-
-- `req comments`
-- `req std`
-
-### sayeachline.py
-
-Registra verificador que imprime cada linha executada.
-Util para debug de fluxo.
+A documentacao detalhada das bibliotecas foi movida para arquivos dedicados em `docs/libs/`.
+Cada arquivo inclui comandos/metodos, exemplos em Instruc, explicacao interna e codigo fonte Python da biblioteca.
 
 ## Ordem recomendada para entender o codigo
 

@@ -143,9 +143,29 @@ def meu_verificador(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
     ...
 ```
 
+Callables oficiais de extensao (em `src/types.py`):
+
+- `SyntaxVerification = Callable[[CodeLine, RunnerAPIProtocol], Any]`
+- `SyntaxAdjuster = Callable[[CodeLine, RunnerAPIProtocol], Any]`
+
+Ou seja:
+
+- verificadores e adjusters recebem sempre `(cl, ctx)`
+- o contrato aceita retorno flexivel (`Any`), mas no projeto o comum e `None` ou string de controle
+
+Contexto de linha atual:
+
+- voce pode consultar a linha corrente via `ctx.get_current_line()`
+- o retorno segue `RunnerLineContextProtocol` (`index` e `codeline`)
+
 Detalhes completos de protocolos:
 
 - veja `docs/types-protocols.md`
+
+Sugestao pratica:
+
+- antes de criar uma lib nova, leia o mapa completo de simbolos em `docs/types-protocols.md`
+- isso reduz erro de assinatura e evita usar API nao prevista no contrato
 
 ## Boas praticas gerais
 
