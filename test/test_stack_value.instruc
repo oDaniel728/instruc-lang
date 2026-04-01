@@ -1,0 +1,27 @@
+new def @load
+    req str
+    req stacks
+    req math
+    req std
+end def
+
+new def @main
+    new stack $
+    new stack 0
+    new stack 1
+    new stack 2
+    
+    use stack $
+        stack run stack loadv literal int 1 2 3 as 1
+        stack run stack loadv literal int 11 12 13 as 2
+
+        stack run stack load 1 as 2
+        stack run stack load 0 as 2
+
+        stack run call math@opsum as 2
+        stack run call std@print as 2
+
+end def
+
+new def @quit
+end def
