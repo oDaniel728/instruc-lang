@@ -85,4 +85,5 @@ def __concat(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
                 ctx.get_current_stack().append(s);
 
 def _on_load(ctx: "RunnerAPIProtocol"):    
+    ctx.register_memory("str:__quote", __quote);
     ctx.get_syntax_verifications().append(__str_kw_verif)
