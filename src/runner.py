@@ -36,8 +36,8 @@ class Runner():
     def set_current_line(self, line: RunnerLineContext):
         self._current_line = line;
 
-    def __require__(self, name: str) -> dict[str, Any]:
-        f = Path(f"src/libs/{name}.py");
+    def __require__(self, name: str | Path) -> dict[str, Any]:
+        f = Path(name);
         if not f.exists():
             raise Exception(f"Library '{name}' not found");
         symbols = carregar_simbolos(f);
@@ -45,7 +45,14 @@ class Runner():
             symbols["_on_load"](self);
         return symbols;
     def require(self, name: str):
-        c = self.__require__(name);
+        c = self.__require__(f"src/libs/{name}.py");
+        self.libs[name] = c;
+    def require_file(self, path: str | Path):
+        path = Path(path);
+        if not path.exists():
+            raise Exception(f"File '{path}' not found");
+        name = path.stem;
+        c = self.__require__(path);
         self.libs[name] = c;
     
     def get_current_stack(self) -> list[Any]:
@@ -66,6 +73,10 @@ class Runner():
             self.labels[name] = [];
         return self.labels[name];
     def get_memory[T](self, name: str, default: T) -> T:
+        if m:=re.match(r"^(.+)\:(.+)$", name):
+            if not m.group(1) in self.libs and default == None:
+                raise Exception(f"Library '{m.group(1)}' not found\nTry using `req {m.group(1)}` to load it");
+
         if name not in self.memory:
             self.memory[name] = default;
         return self.memory[name];
@@ -86,6 +97,9 @@ class Runner():
         self.labels[name] = value;
     def overwrite_memory(self, name: str, value: Any):
         self.memory[name] = value;
+    
+    def has_lib(self, name: str) -> bool:
+        return name in self.libs;
 
     def explode_stack(self, name: str):
         del self.stacks[name];
@@ -199,6 +213,7 @@ class Runner():
     def run(self, debug: bool = False):
         """Run the full lifecycle: @load, @main, @quit."""
         self.read();
+        self.require("builtins")
         self.adjust_code();
         if "@load" in self.labels:
             self.execute("@load");

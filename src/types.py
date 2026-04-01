@@ -1,9 +1,13 @@
+from pathlib import Path
 import re
 from typing import Any, Callable, Protocol, TYPE_CHECKING, Type
 type Unknown = Any
 from . import enum
 if TYPE_CHECKING:
     from .codeline import CodeLine
+
+type SyntaxVerification = Callable[["CodeLine", "RunnerAPIProtocol"], Any]
+type SyntaxAdjuster = Callable[["CodeLine", "RunnerAPIProtocol"], Any]
 
 class CodeLineProtocol(Protocol):
     line: str;
@@ -38,15 +42,17 @@ class RunnerAPIProtocol(Protocol):
     def set_current_stack(self, name: str): ...;
 
     def require(self, name: str): ...;
+    def require_file(self, path: str | Path): ...;
 
     def get_libs(self) -> dict[str, dict[str, Any]]: ...;
     def get_lib(self, name: str) -> dict[str, Any]: ...;
 
-    def get_syntax_verifications(self) -> list[Callable[["CodeLine", "RunnerAPIProtocol"], Any]]: ...;
-    def add_syntax_verification(self, func: Callable[["CodeLine", "RunnerAPIProtocol"], Any]): ...;
-    
-    def get_syntax_adjusters(self) -> list[Callable[["CodeLine", "RunnerAPIProtocol"], Any]]: ...;
-    def add_syntax_adjuster(self, func: Callable[["CodeLine", "RunnerAPIProtocol"], Any]): ...;
+    def get_syntax_verifications(self) -> list[SyntaxVerification]: ...;
+    def add_syntax_verification(self, func: SyntaxVerification): ...;
+    def overwrite_syntax_verification(self, name: str , func: SyntaxVerification): ...;
+
+    def get_syntax_adjusters(self) -> list[SyntaxAdjuster]: ...;
+    def add_syntax_adjuster(self, func: SyntaxAdjuster): ...;
 
     def inject_code(self, lines: list[str | CodeLine], label: str = "@main"): ...;
 
@@ -70,3 +76,5 @@ class RunnerAPIProtocol(Protocol):
     def set_current_line(self, line: RunnerLineContextProtocol): ...;
 
     def execute(self, label: str): ...;
+
+    def has_lib(self, name: str) -> bool: ...;
