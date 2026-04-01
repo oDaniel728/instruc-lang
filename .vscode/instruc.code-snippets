@@ -1,0 +1,55 @@
+{
+    "new def": {
+        "prefix": ["newdef", "-nd"],
+        "body": [
+            "new def ${1:name}",
+            "    $0",
+            "end def"
+        ],
+        "include": "*.instruc"
+    },
+    "new stack": {
+        "prefix": ["newstack", "-ns"],
+        "body": [
+            "new stack ${1:name}"
+        ],
+        "include": "*.instruc"
+    },
+    "use stack": {
+        "prefix": ["usestack", "-us"],
+        "body": [
+            "use stack ${1:name}"
+        ],
+        "include": "*.instruc"
+    },
+    "end stack": {
+        "prefix": ["endstack", "-es"],
+        "body": [
+            "end stack ${1:name}"
+        ],
+        "include": "*.instruc"
+    },
+    "require": {
+        "prefix": ["req", "-r"],
+        "body": [
+            "req ${1:module}"
+        ],
+        "include": "*.instruc"
+    },
+    "boilerplate": {
+        "prefix": "!",
+        "body": [
+            "new def @load",
+            "    req std",
+            "end def",
+            "",
+            "new def @main",
+            "    $0",
+            "end def",
+
+            "new def @quit",
+            "end def"
+        ],
+        "include": "*.instruc"
+    }
+}
