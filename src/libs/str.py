@@ -16,6 +16,7 @@ def __str_kw_verif(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
     __loadint(cl, ctx);
     __joinchars(cl, ctx);
     __concat(cl, ctx);    
+    __format(cl, ctx);
 
 __load_kw = "load";
 # str load <CHAR>
@@ -83,6 +84,20 @@ def __concat(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
                 ctx.get_current_stack().extend(s);
             else:
                 ctx.get_current_stack().append(s);
+
+# str format <str> <input_stack> [> <output_stack>]
+def __format(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
+    stack_name = ctx.enum.SyntaxRulePatterns.STACK_NAME
+    if (m:=re.match(fr"^{__str_kw}\s+format\s+{__quote}(.*){__quote}\s+({stack_name})(?:\s*>\s*({stack_name}))?\s*$", cl.line)):
+        fmt = m.group(1);
+        input_stack = m.group(2);
+        output_stack = m.group(3);
+
+        s = fmt.format(*ctx.get_stack(input_stack)).replace("\\n", "\n");
+        if output_stack is not None:
+            ctx.get_stack(output_stack).append(s);
+        else:
+            ctx.get_current_stack().append(s);
 
 def _on_load(ctx: "RunnerAPIProtocol"):    
     ctx.register_memory("str:__quote", __quote);
