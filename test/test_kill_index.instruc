@@ -1,0 +1,16 @@
+new def @load
+    req std
+end def
+
+new def @main
+    load 1
+    load 2
+    load 3
+    
+    kill i 1
+
+    print
+end def
+
+new def @quit
+end def

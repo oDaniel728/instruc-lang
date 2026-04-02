@@ -65,6 +65,16 @@ def __stack_operators__(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
         line
     ):
         cstack.remove(int(m.group(1)));
+    elif m:=re.match(
+        enum
+            .SyntaxRegularExpressionPatterns
+            .KILLI,
+        line
+    ):
+        i = int(m.group(1));
+        if i < 0 or i >= len(cstack):
+            raise IndexError(f"Index {i} out of range for current stack");
+        cstack.pop(i);
 
 def __requirements__(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
     line = cl.line;
