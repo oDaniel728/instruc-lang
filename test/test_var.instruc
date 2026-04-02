@@ -1,0 +1,16 @@
+new def @load
+    req comments
+    req std
+    req var
+end def
+
+new def @main
+    var int foo 10      # definição
+    var get foo         # carregamento
+    var set foo 3       # mudança
+    var end foo         # limpeza
+    print
+end def
+
+new def @quit
+end def
