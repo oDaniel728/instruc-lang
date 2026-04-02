@@ -28,6 +28,7 @@ class Runner():
         self._current_label = "";
         self._current_stack = "$";
         self.register_stack(self._current_stack);
+        self.stacks_history = list[str]();
 
         self._current_line = RunnerLineContext(0, CodeLine(""));
     
@@ -63,6 +64,10 @@ class Runner():
         return self._current_stack;
     def set_current_stack(self, name: str):
         self._current_stack = name;
+        self.stacks_history.append(name);
+    def undo_current_stack(self):
+        if self.stacks_history:
+            self._current_stack = self.stacks_history.pop();
 
     def get_stack(self, name: str) -> list[Any]:
         if name == '.': return self.get_current_stack();

@@ -79,3 +79,5 @@ class RunnerAPIProtocol(Protocol):
     def execute(self, label: str): ...;
 
     def has_lib(self, name: str) -> bool: ...;
+
+    def undo_current_stack(self): ...;
