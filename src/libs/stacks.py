@@ -140,6 +140,32 @@ def __loadv_kw_verif(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
 
     return None;
 
+__expand_kw = "expand";
+# stack expand <stack>[:<index>] [into <stack>]
+def __expand_kw_verif(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
+    line = cl.line;
+    if not line.startswith(__PREFIX): return;
+    stack_opt_index = ctx.enum.SyntaxRulePatterns.STACK_OPT_ITEM_SELECTION
+    stack_name = ctx.enum.SyntaxRulePatterns.STACK_NAME
+    into = fr"(?:\s+into\s+({stack_name}))";
+    __expand_fmt = fr"^{__PREXP}{__expand_kw}\s+{stack_opt_index}{into}?$";
+    if m:=re.match(__expand_fmt, line):
+        stack_id, index, into_stack = m.group(1), m.group(2), m.group(3);
+        stack = ctx.get_stack(stack_id);
+        if index is not None:
+            i = ctx.get_stack_item(stack_id, index);
+            if isinstance(i, list):
+                items = i;
+            else:
+                items = [i];
+        else:
+            items = stack[-1];
+        if into_stack is not None:
+            ctx.get_stack(into_stack).extend(items);
+        else:
+            ctx.get_current_stack().extend(items);
+        # print(f"expanded stack {s} at index {i} into {'current stack' if into_stack is None else 'stack ' + into_stack}");
+
 def _on_load(ctx: "RunnerAPIProtocol"):    
     ctx.register_memory(f"{__NAMESPACE}:merge_keyword", __merge_kw);
     ctx.register_memory(f"{__NAMESPACE}:load_keyword", __load_kw);
@@ -153,3 +179,4 @@ def _on_load(ctx: "RunnerAPIProtocol"):
     ctx.add_syntax_verification(__loadv_kw_verif);
     ctx.add_syntax_verification(__call_kw_verif);
     ctx.add_syntax_verification(__run_kw_verif);
+    ctx.add_syntax_verification(__expand_kw_verif);
