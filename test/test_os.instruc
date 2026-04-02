@@ -1,0 +1,22 @@
+new def @load
+    req std
+    req str
+    req os
+    req stacks
+    req comments
+end def
+
+new def @main
+    new stack $
+    new stack 0
+
+    use stack $
+        stack run os getl "./foo.txt" as 0
+        stack expand 0:- into 0
+        stack run kill i 0 as 0
+        stack run call std@print as 0
+    end stack *
+end def
+
+new def @quit
+end def
