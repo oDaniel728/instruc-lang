@@ -69,9 +69,11 @@ class Runner():
         if name not in self.stacks:
             self.stacks[name] = [];
         return self.stacks[name];
-    def get_stack_item(self, stack_name: str, index: int) -> Any:
+    def get_stack_item(self, stack_name: str, index: str|int) -> Any:
         stack = self.get_stack(stack_name);
         if index == '-': return stack[-1];
+        if isinstance(index, str):
+            index = int(index);
         if index < 0 or index >= len(stack):
             raise IndexError(f"Index {index} out of range for stack '{stack_name}'");
         return stack[index];
