@@ -1,5 +1,6 @@
 import re
-from typing import TYPE_CHECKING, Any, Callable
+from typing import TYPE_CHECKING, Any, Callable, Optional, Type
+from typing_extensions import Literal
 if TYPE_CHECKING:
     from .types import RunnerAPIProtocol
 from . import enum
@@ -21,6 +22,16 @@ class CodeLine():
             r = v(self, runnerapi);
             if r == "SKIP":
                 return;
+            # r = (False, [<exc>,] <message>)
+            elif isinstance(r, tuple) and len(r) >= 2 and r[0] == False:
+                if len(r) == 2:
+                    raise SyntaxError(f"Syntax error at line {runnerapi.get_memory('instruc:_line', 0)}: {self.line}");
+                elif len(r) == 3:
+                    f: Literal[False]
+                    e: Type[Exception]
+                    m: Optional[str]
+                    f, e, m = r;
+                    raise e(f"Syntax error at line {runnerapi.get_memory('instruc:_line', 0)}: {self.line}\n{m}");
 
     def adjust(self, runnerapi: "RunnerAPIProtocol"):
         """Apply syntax adjusters that can rewrite line text."""
