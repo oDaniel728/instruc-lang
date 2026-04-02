@@ -68,6 +68,8 @@ class Runner():
     def undo_current_stack(self):
         if self.stacks_history and self._current_stack == self.stacks_history[-1]:
             self._current_stack = self.stacks_history.pop();
+        self._current_stack = self.stacks_history[-1] if self.stacks_history else "$";
+        return self.get_current_stack();
     def get_last_stack(self) -> list[Any]:
         if len(self.stacks_history) < 2:
             return self.undo_current_stack() or [];
@@ -122,6 +124,8 @@ class Runner():
 
     def explode_stack(self, name: str):
         del self.stacks[name];
+        if self._current_stack == name:
+            self.undo_current_stack();
     
     def replace_code(self, expression: str, repl: Callable[[re.Match], str] | str):
         for label in self.labels.values():

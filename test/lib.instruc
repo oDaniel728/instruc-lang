@@ -1,0 +1,7 @@
+new def foo
+    new stack temp
+    use stack temp
+    call std@print
+    end stack temp
+    use stack ..
+end def
