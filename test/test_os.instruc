@@ -11,9 +11,25 @@ new def @main
     new stack 0
 
     use stack $
+        
+        # run os getl "./foo.txt" as stack 0
+        # getl  - get lines
+        # getf  - get content
+        # getfs - get file size
         stack run os getl "./foo.txt" as 0
+
+        # expand 0:- and put into stack 0
+        # 0:- > stack 0, last index("-")
+        # <stack>:<index>
+        # (index) "-" : last index
+        # (stack) "." : current stack
         stack expand 0:- into 0
+
+        # run kill i 0 as stack 0
+        # kill i - kill index of current stack
         stack run kill i 0 as 0
+
+        # run call std@print as stack 0
         stack run call std@print as 0
     end stack *
 end def
