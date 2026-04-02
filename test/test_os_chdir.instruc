@@ -1,0 +1,22 @@
+new def @load
+    req std
+    req str
+    req os
+    req stacks
+    os cd "./test"
+end def
+
+new def @main
+    new stack 0
+    new stack $
+
+    use stack $
+        stack run os getl "./epar.instruc" as 0
+        stack run stack expand .:- into . as 0
+        stack run kill i 0 as 0
+        stack run print as 0
+    end stack *
+end def
+
+new def @quit
+end def

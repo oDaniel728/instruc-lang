@@ -94,8 +94,23 @@ def __os_set_file_verif(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
     else:
         return (False, SyntaxError, f"Invalid use of newf, only `as <stack_id>` or `<content>` are allowed after path");
 
+# os cd "<path>"
+def __os_cd_verif(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
+    if not cl.line.startswith(__os_kw + " cd"):
+        return;
+    __os_cd_fmt = fr"{__os_kw}\s+cd\s+{__str}";
+    if m:=re.match(__os_cd_fmt, cl.line):
+        path = m.group(1);
+        try:
+            __os__.chdir(path);
+        except Exception as e:
+            return (False, RuntimeError, f"Failed to change directory: {e}");
+    else:
+        return (False, SyntaxError, f"Invalid syntax for os cd, expected `os cd <path>`");
+
 def _on_load(ctx: "RunnerAPIProtocol"):
     ctx.add_syntax_verification(__os_load_verif);
     ctx.add_syntax_verification(__os_run_verif);
     ctx.add_syntax_verification(__os_get_file_verif);
     ctx.add_syntax_verification(__os_set_file_verif);
+    ctx.add_syntax_verification(__os_cd_verif);
