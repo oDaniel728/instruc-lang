@@ -34,8 +34,8 @@ class SyntaxRegularExpressionPatterns():
     RETURN = fr"{SyntaxKeywords.RET}\s+(.+)";
 
     LOAD = fr"^{SyntaxKeywords.LOAD}\s+(\d+)$";
-    KILL = fr"^{SyntaxKeywords.KILL}\s+(\d+)$";
-    KILLI = fr"^{SyntaxKeywords.KILL}\s+i\s+(\d+)$";
+    KILL = fr"^{SyntaxKeywords.KILL}\s+((?:\d+)|\*)$";
+    KILLI = fr"^{SyntaxKeywords.KILL}\s+i\s+((?:\d+)|\*)$";
     CALL  = fr"{SyntaxKeywords.CALL}\s+({SyntaxRulePatterns.METHOD_NAME})";
 
     # libformat = lib@method
