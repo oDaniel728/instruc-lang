@@ -99,7 +99,7 @@ __loadv_literal_kw = "literal";
 __loadv_literal_types = r"(int|float|str|bool)";
 __loadv_literal_fmt = fr"{__PREXP}{__loadv_kw}\s+{__loadv_literal_kw}\s+{__loadv_literal_types}\s+(.+)";
 __quote = ''
-# stack load <...values>
+# stack loadv literal (int|float|str|bool) <...values>
 def __loadv_kw_verif(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
     global __quote; 
     if __quote == '': 
