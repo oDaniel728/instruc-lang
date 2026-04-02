@@ -16,6 +16,7 @@ Este diretorio contem uma documentacao por biblioteca.
 - [stacks](stacks.md)
 - [std](std.md)
 - [str](str.md)
+- [var](var.md)
 
 ## Formato de cada arquivo
 
