@@ -1,0 +1,32 @@
+new def @load
+    req str
+    req std
+    req stacks
+    req for
+    req var
+    req label
+end def
+
+new def for_example
+    stack run var get for:item as 1
+    stack run str format "Ola pela {}º vez!" . > 2 as 1
+    stack run kill * as 1
+    stack run print as 2
+    stack run kill * as 2
+end def
+
+new def @main
+    new stack 0
+    new stack 1
+    new stack 2
+    new stack $
+
+    use stack $
+        stack run stack loadv literal int 1 2 3 4 5 as 0
+        stack run foreach call for_example as 0
+
+    end stack *
+end def
+
+new def @quit
+end def
