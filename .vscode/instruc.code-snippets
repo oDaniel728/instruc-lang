@@ -46,7 +46,7 @@
             "new def @main",
             "    $0",
             "end def",
-
+            "",
             "new def @quit",
             "end def"
         ],
