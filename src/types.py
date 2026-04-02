@@ -41,6 +41,7 @@ class RunnerAPIProtocol(Protocol):
     def get_current_stack(self) -> list[Any]: ...;
     def get_current_stack_name(self) -> str: ...;
     def set_current_stack(self, name: str): ...;
+    def get_last_stack(self) -> list[Any]: ...;
 
     def require(self, name: str): ...;
     def require_file(self, path: str | Path): ...;

@@ -66,11 +66,16 @@ class Runner():
         self._current_stack = name;
         self.stacks_history.append(name);
     def undo_current_stack(self):
-        if self.stacks_history:
+        if self.stacks_history and self._current_stack == self.stacks_history[-1]:
             self._current_stack = self.stacks_history.pop();
+    def get_last_stack(self) -> list[Any]:
+        if len(self.stacks_history) < 2:
+            return self.undo_current_stack() or [];
+        return [];
 
     def get_stack(self, name: str) -> list[Any]:
         if name == '.': return self.get_current_stack();
+        elif name == '..': return self.get_last_stack();
         if name not in self.stacks:
             self.stacks[name] = [];
         return self.stacks[name];
