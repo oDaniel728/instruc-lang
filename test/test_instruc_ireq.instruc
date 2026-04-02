@@ -1,0 +1,14 @@
+new def @load
+    req std
+    req str
+    req ireq
+    req label
+    ireq "./test/lib.instruc"
+end def
+
+new def @main
+    call foo
+end def
+
+new def @quit
+end def

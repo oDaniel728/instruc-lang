@@ -18,7 +18,8 @@ class Runner():
     enum = enum;
     CodeLine = CodeLine;
     SyntaxAdjusters = list[Callable[["CodeLine", "RunnerAPIProtocol"], Any]]();
-    def __init__(self, file: Path | str) -> None:
+    def __init__(self, file: Path | str, silent: bool = False) -> None:
+        self.silent = silent;
         self.fp = Path(file);
         self.stacks = dict[str, list[Any]]();
         self.labels = dict[str, list[CodeLine]]();
@@ -31,7 +32,10 @@ class Runner():
         self.stacks_history = list[str]();
 
         self._current_line = RunnerLineContext(0, CodeLine(""));
-    
+
+    def is_silent(self) -> bool:
+        return self.silent;
+
     def get_current_line(self) -> RunnerLineContext:
         return self._current_line;
     def set_current_line(self, line: RunnerLineContext):
@@ -48,10 +52,19 @@ class Runner():
     def require(self, name: str):
         c = self.__require__(f"src/libs/{name}.py");
         self.libs[name] = c;
+    def _require_instruc(self, name: Path):
+        n = name.stem;
+        c = Runner(name, silent=True);
+        c.run()
+        self.labels |= c.labels;
+
     def require_file(self, path: str | Path):
         path = Path(path);
         if not path.exists():
             raise Exception(f"File '{path}' not found");
+        if path.suffix == ".instruc":
+            self._require_instruc(path);
+            return;
         name = path.stem;
         c = self.__require__(path);
         self.libs[name] = c;
@@ -64,7 +77,8 @@ class Runner():
         return self._current_stack;
     def set_current_stack(self, name: str):
         self._current_stack = name;
-        self.stacks_history.append(name);
+        if not name in ['.', '..']:
+            self.stacks_history.append(name);
     def undo_current_stack(self):
         if self.stacks_history and self._current_stack == self.stacks_history[-1]:
             self._current_stack = self.stacks_history.pop();
@@ -77,7 +91,7 @@ class Runner():
 
     def get_stack(self, name: str) -> list[Any]:
         if name == '.': return self.get_current_stack();
-        elif name == '..': return self.get_last_stack();
+        elif name == '..': return self.get_stack(self.stacks_history[-2]) if len(self.stacks_history) >= 2 else self.get_current_stack();
         if name not in self.stacks:
             self.stacks[name] = [];
         return self.stacks[name];
@@ -181,6 +195,7 @@ class Runner():
         line = line.strip();
         if (line == ''): return;
         c = CodeLine(line)
+        # if self.is_silent(): return;
         if m:=re.match(
             enum
                 .SyntaxRegularExpressionPatterns
@@ -235,14 +250,16 @@ class Runner():
 
     def run(self, debug: bool = False):
         """Run the full lifecycle: @load, @main, @quit."""
+        self.set_current_stack("$");
         self.read();
-        self.require("builtins")
-        self.adjust_code();
+        if not self.is_silent():
+            self.require("builtins")
+            self.adjust_code();
+        
         if "@load" in self.labels:
             self.execute("@load");
-        if "@main" not in self.labels:
-            raise Exception("No @main label found");
-        self.execute("@main");
+        if "@main" in self.labels:
+            self.execute("@main");
         if "@quit" in self.labels:
             self.execute("@quit");
         if debug:

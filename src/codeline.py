@@ -15,6 +15,8 @@ class CodeLine():
     def execute(self, runnerapi: "RunnerAPIProtocol"):
         """Run registered syntax verifications for this line."""
         if (self.line == ''): return;
+        if (runnerapi.is_silent()): return;
+    
         c = runnerapi.get_current_line()
         c.index = runnerapi.get_memory("instruc:_line", 0);
         c.codeline = self;
@@ -35,6 +37,7 @@ class CodeLine():
 
     def adjust(self, runnerapi: "RunnerAPIProtocol"):
         """Apply syntax adjusters that can rewrite line text."""
+        if (runnerapi.is_silent()): return;
         for a in runnerapi.get_syntax_adjusters():
             ret = a(self, runnerapi); # type: ignore
             self.line = ret if ret != None else self.line;

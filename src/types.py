@@ -25,6 +25,8 @@ class RunnerLineContextProtocol(Protocol):
     @codeline.setter
     def codeline(self, value: CodeLineProtocol): ...;
 class RunnerAPIProtocol(Protocol):
+    def is_silent(self) -> bool: ...;
+
     def get_stack(self, name: str) -> list[Any]: ...;
     def get_stack_item(self, stack_name: str, index: str) -> Any: ...;
     def get_label(self, name: str) -> list[CodeLine]: ...;
