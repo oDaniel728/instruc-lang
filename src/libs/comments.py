@@ -6,6 +6,7 @@ if __TC__:
     from ..types import RunnerAPIProtocol, CodeLineProtocol
 
 def _comment_verif(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
+    cl.line = cl.line.strip();
     line = cl.line;
     line = re.sub(r"#.*$", "", line);
     return line;
