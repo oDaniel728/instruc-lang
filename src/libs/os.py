@@ -2,7 +2,9 @@ import re
 from typing import TYPE_CHECKING as __TC__;
 import builtins as __builtins__;
 import os as __os__;
-import subprocess as __subprocess__;
+import subprocess as __subprocess__
+
+from pathlib import Path as __PATH__;
 if __TC__:
     from ..types import RunnerAPIProtocol, CodeLineProtocol;
 
@@ -108,9 +110,21 @@ def __os_cd_verif(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
     else:
         return (False, SyntaxError, f"Invalid syntax for os cd, expected `os cd <path>`");
 
+__os_ls_fmt = fr"{__os_kw}\s+ls";
+# os ls
+def __os_ls_verif(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
+    if not cl.line.startswith(__os_kw + " ls"):
+        return;
+    if re.match(__os_ls_fmt, cl.line):
+        entries = [entry.name.__str__() for entry in __PATH__(__os__.getcwd()).iterdir()];
+        ctx.get_current_stack().append(entries);
+    else:
+        return (False, SyntaxError, f"Invalid syntax for os ls, expected `os ls`");
+
 def _on_load(ctx: "RunnerAPIProtocol"):
     ctx.add_syntax_verification(__os_load_verif);
     ctx.add_syntax_verification(__os_run_verif);
     ctx.add_syntax_verification(__os_get_file_verif);
     ctx.add_syntax_verification(__os_set_file_verif);
     ctx.add_syntax_verification(__os_cd_verif);
+    ctx.add_syntax_verification(__os_ls_verif);
