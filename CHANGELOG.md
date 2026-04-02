@@ -2,6 +2,41 @@
 
 Todas as mudancas relevantes deste projeto serão documentadas neste arquivo.
 
+## [1.2.18.9] - 2026-04-02
+
+### Adicoes
+
+- Suporte a variaveis de memoria da linguagem (`src/libs/var.py`) e novo cenario de teste em `test/test_var.instruc`.
+- Nova biblioteca `os` (`src/libs/os.py`) com verificacoes de `os cd "<path>"` e `os ls -> [...str]`, incluindo testes dedicados (`test/test_os.instruc`, `test/test_os_chdir.instruc`, `test/test_os_ls.instruc`).
+- Suporte a loops `for/foreach` com a nova biblioteca `src/libs/for.py` e cobertura de testes em `test/test_for.instruc`.
+- Novas capacidades de stack: `kill i <index>`, `kill *`, `stack loadv` para literais (`int`, `float`, `string`, `boolean`), selecao de item por indice e tratamento de indice `-` (ultimo item), com novos testes (`test/test_kill_index.instruc`, `test/test_stack_value.instruc`).
+- Historico de stacks com operacoes de `undo` e recuperacao da ultima stack no runtime (`src/runner.py`).
+- Expansao das regras de sintaxe para stack (`expand` com indice opcional, ajustes de regex e padroes em `src/codeline.py`, `src/enum.py`, `src/types.py`, `src/libs/stacks.py`).
+- Novo modo silencioso no runner e evolucao do tratamento de erros de execucao (`src/runner.py`).
+- Melhorias funcionais de strings com formatacao e ajustes em `src/libs/str.py`.
+- Atualizacao de exemplos e documentacao compacta em `tiny.md`.
+
+### Alteracoes
+
+- Novo formato de versões: `[general release].[code release].[added features].[bug fixes]` para refletir melhor o estado do projeto.
+- Atualizacao dos snippets de desenvolvimento em `.vscode/instruc.code-snippets`.
+- Ajustes em bibliotecas internas (`src/libs/builtins.py`, `src/libs/comments.py`, `src/libs/stacks.py`, `src/libs/str.py`) para compatibilizar os novos fluxos de execucao e sintaxe.
+- Inclusao de novos arquivos de apoio e cenarios complementares de teste (`test/lib.instruc`, `test/test_instruc_ireq.instruc`, `foo.txt`).
+
+### Fixes
+
+- Correcao da implementacao incremental de recursos adicionados em commits recentes.
+- Correcao de variaveis de memoria da linguagem.
+- Correcao no parser de comentarios para remover espacos extras no inicio/fim.
+- Correcao no `get_stack_item` para aceitar indice em string e resolver `-` como ultimo item.
+- Melhoria da rotina de `undo` com validacoes adicionais e teste de regressao para gerenciamento de stack.
+- Ajustes de comentarios/testes relacionados ao modulo `os`.
+- Ajuste de legibilidade no snippet boilerplate (linha em branco adicional).
+
+### Remocoes
+
+- Nenhuma remocao de funcionalidade ou arquivo de runtime nesta versao.
+
 ## [1.1.0] - 2026-03-31
 
 ### Adicoes
