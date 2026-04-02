@@ -26,6 +26,7 @@ class RunnerLineContextProtocol(Protocol):
     def codeline(self, value: CodeLineProtocol): ...;
 class RunnerAPIProtocol(Protocol):
     def get_stack(self, name: str) -> list[Any]: ...;
+    def get_stack_item(self, stack_name: str, index: int) -> Any: ...;
     def get_label(self, name: str) -> list[CodeLine]: ...;
     def get_memory[T](self, name: str, default: T) -> T: ...;
 

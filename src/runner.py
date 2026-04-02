@@ -65,9 +65,15 @@ class Runner():
         self._current_stack = name;
 
     def get_stack(self, name: str) -> list[Any]:
+        if name == '.': return self.get_current_stack();
         if name not in self.stacks:
             self.stacks[name] = [];
         return self.stacks[name];
+    def get_stack_item(self, stack_name: str, index: int) -> Any:
+        stack = self.get_stack(stack_name);
+        if index < 0 or index >= len(stack):
+            raise IndexError(f"Index {index} out of range for stack '{stack_name}'");
+        return stack[index];
     def get_label(self, name: str) -> list[CodeLine]:
         if name not in self.labels:
             self.labels[name] = [];
