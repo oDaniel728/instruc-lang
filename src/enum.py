@@ -16,7 +16,7 @@ class SyntaxKeywords():
 class SyntaxRulePatterns():
     LABEL_NAME = r"[a-zA-Z_\@][a-zA-Z0-9_]*";
     STACK_NAME = r"(?:[a-zA-Z0-9_\$]+)|\.";
-    STACK_INDEX = r"\d+";
+    STACK_INDEX = r"(?:\d+)|\-";
     STACK_ITEM_SELECTION = fr"({STACK_NAME}):({STACK_INDEX})";
     STACK_OPT_ITEM_SELECTION = fr"({STACK_NAME})(?::({STACK_INDEX}))?";
     OPT_STACK_ITEM_SELECTION = fr"({STACK_NAME})?:({STACK_INDEX})";
