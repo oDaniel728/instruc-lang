@@ -64,7 +64,10 @@ def __stack_operators__(cl: "CodeLineProtocol", ctx: "RunnerAPIProtocol"):
             .KILL,
         line
     ):
-        cstack.remove(int(m.group(1)));
+        if m.group(1) == "*":
+            cstack.clear();
+        else:
+            cstack.remove(int(m.group(1)));
     elif m:=re.match(
         enum
             .SyntaxRegularExpressionPatterns
