@@ -109,7 +109,7 @@ class Runner():
         return self.labels[name];
     def get_memory[T](self, name: str, default: T) -> T:
         if m:=re.match(r"^(.+)\:(.+)$", name):
-            if not m.group(1) in self.libs and default == None:
+            if not m.group(1) in [*self.libs, "var", "instruc"] and default == None:
                 raise Exception(f"Library '{m.group(1)}' not found\nTry using `req {m.group(1)}` to load it");
 
         if name not in self.memory:
